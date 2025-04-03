@@ -21,20 +21,11 @@ const opponent = FIGHTERS.find((f) => f.id === fighter.versus)
 ---
 
 <Layout title={`${fighter.name} | ${fixedTitle}`}>
-  <section class="pt relative flex min-h-screen w-full lowercase">
+  <section class="pt relative flex flex-col min-h-screen w-full lowercase lg:flex-row">
     <div
-      class="relative z-10 flex min-h-screen w-full max-w-xl flex-col items-center justify-center gap-y-32 px-4 pt-24 text-right text-balance lg:pt-32"
+      class="relative z-10 flex min-h-[50vh] w-full flex-col items-center justify-center gap-y-16 px-4 pt-16 text-center text-balance lg:min-h-screen lg:max-w-xl lg:items-end lg:justify-center lg:gap-y-32 lg:px-8 lg:pt-32 lg:text-right"
     >
-    <BoxerClip clips={fighter.clips} />
-
-      {
-        opponent && (
-          <div class="flex w-full items-center gap-4 justify-center">
-            <img src="/images/versus.png" alt="Versus" class="h-12 w-auto" />
-            <BoxerCard id={opponent.id} name={opponent.name} class="group-hover:scale-110" />
-          </div>
-        )
-      }
+      <BoxerClip clips={fighter.clips} />
     </div>
 
     <div
@@ -43,10 +34,10 @@ const opponent = FIGHTERS.find((f) => f.id === fighter.versus)
     </div>
 
     <div
-      class="relative z-10 mr-7 flex w-full flex-col items-center justify-center px-4 pt-24 lg:flex-row lg:items-start lg:pt-32"
+      class="relative z-10 flex w-full flex-col items-center justify-center px-4 pt-16 lg:flex-row lg:items-start lg:justify-between lg:px-8 lg:pt-32"
     >
       <div
-        class="relative mt-8 flex h-[60vh] w-full items-center justify-center lg:mt-0 lg:h-[80vh] lg:w-1/2"
+        class="relative mt-8 flex h-[50vh] w-full items-center justify-center lg:mt-0 lg:h-[80vh] lg:w-1/2"
       >
         <img
           src={`/images/fighters/big/${id}.webp`}
@@ -57,15 +48,15 @@ const opponent = FIGHTERS.find((f) => f.id === fighter.versus)
         <img
           src={`/images/fighters/text/${id}.png`}
           alt={fighter.name}
-          class="animate-scale-in absolute bottom-24 h-16 w-auto"
+          class="animate-scale-in absolute bottom-12 h-12 w-auto lg:bottom-24 lg:h-16"
           transition:name={`text-${id}`}
         />
       </div>
 
-      <div class="mt-5 ml-7 w-full max-w-xl text-white lg:w-1/2">
-        <div class="space-y-6 rounded-xl bg-black/40 p-6 backdrop-blur-sm">
+      <div class="mt-5 w-full max-w-xl text-white lg:ml-7 lg:w-1/2">
+        <div class="space-y-8 rounded-xl bg-black/40 p-6 backdrop-blur-sm">
           <div class="mb-8 flex flex-col items-center space-x-4">
-            <h1 class="animate-fade-in-up inline-block text-center text-2xl font-bold">
+            <h1 class="animate-fade-in-up inline-block text-center text-xl font-bold lg:text-2xl">
               {fighter.realName}
             </h1>
           </div>
@@ -89,31 +80,37 @@ const opponent = FIGHTERS.find((f) => f.id === fighter.versus)
             </div>
           </div>
 
-          <!-- Birth Date -->
           <div class="animate-fade-in-up animate-delay-400 text-center">
             <div class="text-sm text-gray-400">Fecha de nacimiento</div>
             <div class="text-lg">{birthDate}</div>
           </div>
+
+          {opponent && (
+            <div class="relative flex flex-col items-center justify-center gap-8 mt-8 lg:flex-row lg:gap-16">
+              <img src="/images/versus.png" alt="Versus" class="z-20 w-16 lg:w-24 animate-fade-in-up animate-delay-400">
+              <div class="relative z-10 transition-transform group hover:scale-110 animate-fade-in-up animate-delay-400">
+                <BoxerCard id={opponent.id} name={opponent.name} versus={opponent.versus} class="custom-class" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="flex flex-wrap justify-center gap-3 space-x-2">
-      {
-        (fighter.socials || [])?.map(({ url, image, name, label, followers }) => (
-          <a
-            href={url}
-            target="_blank"
-            aria-label={label ?? name}
-            class="hover:to-theme-turquoise/70 hover:from-theme-tickle-me-pink/70 from-theme-turquoise/70 to-theme-tickle-me-pink/70 flex w-20 flex-col items-center justify-center bg-gradient-to-b transition duration-500 hover:scale-125"
-          >
-            <image.logo />
-            <span class="text-white lowercase">{followers}</span>
-          </a>
-        ))
-      }
+    <div class="flex flex-wrap justify-center gap-3 space-x-2 px-4">
+      {(fighter.socials || [])?.map(({ url, image, name, label, followers }) => (
+        <a
+          href={url}
+          target="_blank"
+          aria-label={label ?? name}
+          class="hover:to-theme-turquoise/70 hover:from-theme-tickle-me-pink/70 from-theme-turquoise/70 to-theme-tickle-me-pink/70 flex w-16 flex-col items-center justify-center bg-gradient-to-b transition duration-500 hover:scale-110 lg:w-20"
+        >
+          <image.logo />
+          <span class="text-white text-sm lowercase lg:text-base">{followers}</span>
+        </a>
+      ))}
     </div>
   </section>
 
